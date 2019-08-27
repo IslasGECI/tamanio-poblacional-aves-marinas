@@ -1,0 +1,11 @@
+# Esta distribución es necesaria para probar con python 3.7
+dist: xenial
+language: python
+
+services:
+  - docker
+# Comando para correr las pruebas y medir cobertura 
+script:
+  - make build
+after_success:
+  - echo "Se contruyó con éxito"
