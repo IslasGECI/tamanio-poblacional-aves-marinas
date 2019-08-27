@@ -10,3 +10,5 @@ script:
 - make build
 after_success:
 - docker save tamanio-poblacional-aves-marinas:latest | sshpass -p ${PASSWORD_SERVIDOR} ssh -oStrictHostKeyChecking=no -C ${USUARIO_VPS}@${SERVIDOR_VPS} docker load
+- sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker rm -f $(docker ps --filter name=${NOMBRE_APLICACION} -q)"
+- sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker run -p ${PUERTO}:4000 --name ${NOMBRE_APLICACION} tamanio-poblacional-aves-marinas:latest"
