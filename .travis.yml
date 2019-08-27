@@ -5,4 +5,4 @@ services:
 script:
 - make build
 after_success:
-- docker save tamanio-poblacional-aves-marinas:latest | ssh oStrictHostKeyChecking=no -C ${USUARIO_VPS}@${SERVIDOR_VPS} docker load
+- docker save tamanio-poblacional-aves-marinas:latest | ssh -oStrictHostKeyChecking=no -C ${USUARIO_VPS}@${SERVIDOR_VPS} docker load
