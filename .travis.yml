@@ -1,11 +1,8 @@
-# Esta distribución es necesaria para probar con python 3.7
 dist: xenial
 language: python
-
 services:
-  - docker
-# Comando para correr las pruebas y medir cobertura 
+- docker
 script:
-  - make build
+- make build -t tamanio-poblacional-aves-marinas
 after_success:
-  - secure: "pH01k+JmaysCs/ItImvdxQ9b536FfFes9FPihs6mfcMx/XvowjJaJRD/3rtxBuEA0787oqq1eqvzp1A6DJ3AC7213K5CicFNcR9cp+y0buZco6lt7noovK7TLmybJ2JGHfmV5H7bb351tIrJELmE0AdIV4tx+WK8drNABdSLIvmokwpGRyeck8vU8xtzvtGrbCEUyMHxy5aMhw2ua9YT2g9+ISfkXmu82aMKTx8FYm4iBLPErc354xxjrXSUBhVtSAF01VOpbQi4qUiht5uwCF4Bylaay944KORLnZhsnIct4RyfYYkfi0PFUXKegG4UQpc+PS1wNomar5r4m0EgdG2MsEOzNpsxepl7Ky/ozxJF04EgE91+ZSf/XjblPIL0d/iruJn2qtucxQDg7LTfA1Uyo8FLoqQooXjfDqTmiJfFEuY/GSv1HAjvwj4qKFSkzC8sirNU0D6aMiVPkxiW8DEjciWJqbuJml5hWkPVSFHUWLSFETM6+X01S0zJZ6dtSijGnDbSSgsUOkjEm0VRN/oLCGTpP0zyOiXGQCzgi9x+K7VdAfSE3+ECAUJWOFEdGwaDgkFrve58QmsDWM2CGKzymhFwxXR3e2W8GrNM8a5gHJePC8VLv15TZr3bFOgDgtnfxv06ST0ZrXKrbh2A7okFLT7oj6IVkeijiQ4188I="
+- secure: docker save tamanio-poblacional-aves-marinas:latest | ssh -C ${SERVIDOR_VPS}@${USUARIO_VPS} docker load
