@@ -1,14 +1,8 @@
 var layer = null;
 var indiceTemporada = 0;
 var temporadaActual = null;
-var map = null;
+var mapaGoogle = null;
 var circulos = new Array();
-
-function scaleToColor(x, out_range = [0, 255]) {
-  domain = ["A".charCodeAt(0), "Z".charCodeAt(0)];
-  y = (x - (domain[1] + domain[0]) / 2) / (domain[1] - domain[0]);
-  return y * (out_range[1] - out_range[0]) + (out_range[1] + out_range[0]) / 2;
-}
 
 d3.select(window).on("load", () => {
   main();
@@ -16,9 +10,6 @@ d3.select(window).on("load", () => {
 
 function addDrawFunction(mapLayer) {
   d3.json("/tamanio", function (islas) {
-    var radioMaximo = d3.max(islas, function (d) {
-      return d.MaximoNidos;
-    });
     if (layer == null) {
       layer = d3
         .select(mapLayer.getPanes().overlayLayer)
@@ -56,22 +47,14 @@ function addDrawFunction(mapLayer) {
             isla.Latitud
           ]),
           strokeWeight: 0,
-          fillColor: `rgb(${scaleToColor(
-            isla.Codigo[0].charCodeAt(0)
-          )},${scaleToColor(isla.Codigo[1].charCodeAt(0))},${scaleToColor(
-            isla.Codigo[2].charCodeAt(0)
-          )})`,
+          fillColor: getRGBStringFromCode(isla.Codigo),
           fillOpacity: 0.35
         });
-        circulo.setMap(map);
+        circulo.setMap(mapaGoogle);
         circulos.push(circulo);
 
         $("#bird-list").append(`
-              <tr style="background-color: rgb(${scaleToColor(
-          isla.Codigo[0].charCodeAt(0)
-        )},${scaleToColor(isla.Codigo[1].charCodeAt(0))},${scaleToColor(
-          isla.Codigo[2].charCodeAt(0)
-        )})">
+              <tr style="background-color: ${getRGBStringFromCode(isla.Codigo)}">
                   <th>${isla.NombreIsla}</th>
                   <th>${isla.NombreEspecie}</th>
                   <th>${isla.MaximoNidos}</th>
@@ -83,8 +66,6 @@ function addDrawFunction(mapLayer) {
 }
 
 async function main() {
-  let islas = await getIslands();
-  let aves = await getBirds();
   let temporadas = await getSeasons();
   temporadaActual = temporadas[indiceTemporada];
 
@@ -92,7 +73,7 @@ async function main() {
   $("#scroll-temporada").attr("min", 1);
   $("#scroll-temporada").attr("max", temporadas.length);
 
-  map = new google.maps.Map($("#map")[0], {
+  mapaGoogle = new google.maps.Map($("#map")[0], {
     zoom: 6,
     center: new google.maps.LatLng(27.577622, -111.454526),
     mapTypeControl: false,
@@ -101,12 +82,14 @@ async function main() {
     fullscreenControl: false,
     styles: estiloMapa
   });
+
   let overlay = new google.maps.OverlayView();
   overlay.onAdd = () => {
     addDrawFunction(overlay);
   };
-  overlay.onRemove = function () { };
-  overlay.setMap(map);
+  overlay.onRemove = () => {};
+  overlay.setMap(mapaGoogle);
+  
   $("#scroll-temporada").on("input", function () {
     indiceTemporada = this.value - 1;
     temporadaActual = temporadas[indiceTemporada];
