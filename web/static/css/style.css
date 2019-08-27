@@ -4,18 +4,6 @@ html, body, #map {
     margin: 0;
     padding: 0;
 }
-.traps, .marker {
-    position: absolute;
-}
-
-.marker {
-    padding-right: 100px;
-    font: 10px sans-serif;
-}
-
-.isla {
-    opacity: .2;
-}
 
 #temporada-label {
     position: absolute;

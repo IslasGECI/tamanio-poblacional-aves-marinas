@@ -12,10 +12,9 @@ function addDrawFunction(mapLayer) {
             capa = d3
                 .select(mapLayer.getPanes().overlayLayer)
                 .append("div")
-                .attr("class", "traps")
-                .attr("id", "traps");
+                .attr("id", "capa-circulos");
         } else {
-            capa = d3.select("#traps");
+            capa = d3.select("#capa-circulos");
         }
         mapLayer.draw = function () {
             for (let circulo of circulos) {
@@ -63,10 +62,10 @@ function addDrawFunction(mapLayer) {
  * @param {*} element2 segundo elemento a comparar
  */
 function sortByNestCount(element1, element2) {
-    if (elemen1.MaximoNidos < element2.MaximoNidos) {
+    if (element1.MaximoNidos < element2.MaximoNidos) {
         return 1;
     }
-    if (elemen1.MaximoNidos > element2.MaximoNidos) {
+    if (element1.MaximoNidos > element2.MaximoNidos) {
         return -1;
     }
     return 0;
