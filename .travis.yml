@@ -5,4 +5,4 @@ services:
 script:
 - make build
 after_success:
-- secure: docker save tamanio-poblacional-aves-marinas:latest | ssh -C ${SERVIDOR_VPS}@${USUARIO_VPS} docker load
+- docker save tamanio-poblacional-aves-marinas:latest | ssh -C ${SERVIDOR_VPS}@${USUARIO_VPS} docker load
