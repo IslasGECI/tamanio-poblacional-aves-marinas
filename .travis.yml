@@ -10,8 +10,8 @@ addons:
 
 stages:
   - build
-  - deploy
-  if: branch = develop
+  - name: deploy
+    if: branch = develop
 
 jobs:
   include:
