@@ -6,8 +6,8 @@ function scaleToColor(x, out_range = [0, 255]) {
 
 function getRGBStringFromCode(code) {
     let valoresRGB = new Array;
-    for (let letra in code) {
-        valoresRGB.push(scaleToColor(letra.charCodeAt(0)));
+    for (let letra of code) {
+        valoresRGB.push(Math.abs(scaleToColor(letra.charCodeAt(0))));
     }
     return `rgb(${valoresRGB[0]}, ${valoresRGB[1]}, ${valoresRGB[2]})`;
 }
