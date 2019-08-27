@@ -11,6 +11,7 @@ addons:
 stages:
   - build
   - deploy
+  if: branch = develop
 
 jobs:
   include:
