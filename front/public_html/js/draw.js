@@ -7,7 +7,7 @@
  * @param {*} mapLayer Capa donde se dibujarán los círculos.
  */
 function addDrawFunction(mapLayer) {
-    d3.json("/tamanio", function (islas) {
+    d3.json("http://localhost:851/api-datos/tamanio", function (islas) {
         if (capa == null) {
             capa = d3
                 .select(mapLayer.getPanes().overlayLayer)

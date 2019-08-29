@@ -8,7 +8,7 @@
  */
 function getIslands() {
     return new Promise(function (resolve, reject) {
-        $.getJSON(`/islas`, islas => {
+        $.getJSON(`http://localhost:851/api-datos/islas`, islas => {
             resolve(islas);
         });
     });
@@ -19,7 +19,7 @@ function getIslands() {
  */
 function getSeasons() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`/temporadas`, islas => {
+        $.getJSON(`http://localhost:851/api-datos/temporadas`, islas => {
             resolve(islas);
         });
     });
@@ -30,7 +30,7 @@ function getSeasons() {
  */
 function getBirds() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`/aves`, islas => {
+        $.getJSON(`http://localhost:851/api-datos/aves`, islas => {
             resolve(islas);
         });
     });
