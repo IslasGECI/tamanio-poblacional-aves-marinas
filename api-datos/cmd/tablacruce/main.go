@@ -21,14 +21,11 @@ func main() {
 	}
 
 	app := App{db, mux.NewRouter()}
-	app.HandleFunc("/aves", app.SpeciesListHandler)
-	app.HandleFunc("/islas", app.IslandListHandler)
-	app.HandleFunc("/temporadas", app.SeasonListHandler)
-	app.HandleFunc("/{ave}/{isla}/{temporada}", app.CountPerSpeciesPerIslandHandler)
-	app.HandleFunc("/tamanio", app.CountTableHandler)
-	// Sirve los archivos estáticos
-	fs := http.FileServer(http.Dir("web/static"))
-	app.PathPrefix("/").Handler(fs)
+	app.HandleFunc("/api-datos/aves", app.SpeciesListHandler)
+	app.HandleFunc("/api-datos/islas", app.IslandListHandler)
+	app.HandleFunc("/api-datos/temporadas", app.SeasonListHandler)
+	app.HandleFunc("/api-datos/{ave}/{isla}/{temporada}", app.CountPerSpeciesPerIslandHandler)
+	app.HandleFunc("/api-datos/tamanio", app.CountTableHandler)
 	log.Println("Escuchando en el puerto 4000")
 	http.ListenAndServe(":4000", app)
 }
