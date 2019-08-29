@@ -25,5 +25,4 @@ FROM debian:bullseye-slim
 WORKDIR /workdir
 COPY --from=compila_go /workdir/bin ./bin
 COPY --from=llena_bd /workdir/data ./data
-COPY ./web /workdir/web
 CMD ["./bin/tablacruce"]
