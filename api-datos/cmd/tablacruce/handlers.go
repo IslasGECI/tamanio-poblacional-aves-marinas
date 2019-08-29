@@ -12,18 +12,21 @@ import (
 // SpeciesListHandler Función encargada de servir las peticiones a /aves
 func (app *App) SpeciesListHandler(w http.ResponseWriter, r *http.Request) {
 	jsonString, _ := json.Marshal(app.GetSpeciesList())
+	enableCors(&w)
 	fmt.Fprint(w, string(jsonString[:]))
 }
 
 // SeasonListHandler Función encargada de servir las peticiones a /temporadas
 func (app *App) SeasonListHandler(w http.ResponseWriter, r *http.Request) {
 	jsonString, _ := json.Marshal(app.GetSeasonList())
+	enableCors(&w)
 	fmt.Fprint(w, string(jsonString[:]))
 }
 
 // IslandListHandler Función encargada de responder las peticiones a /islas
 func (app *App) IslandListHandler(w http.ResponseWriter, r *http.Request) {
 	jsonString, _ := json.Marshal(app.GetIslandList())
+	enableCors(&w)
 	fmt.Fprint(w, string(jsonString[:]))
 }
 
@@ -33,11 +36,18 @@ func (app *App) CountPerSpeciesPerIslandHandler(w http.ResponseWriter, r *http.R
 	ave, isla, temporada := variables["ave"], variables["isla"], variables["temporada"]
 	nidos := app.GetCountPerSpeciesPerIsland(ave, isla, temporada)
 	jsonString, _ := json.Marshal(nidos)
+	enableCors(&w)
 	fmt.Fprint(w, string(jsonString[:]))
 }
 
 // IslandListHandler Función encargada de responder las peticiones a /islas
 func (app *App) CountTableHandler(w http.ResponseWriter, r *http.Request) {
 	jsonString, _ := json.Marshal(app.GetCountTable())
+	enableCors(&w)
 	fmt.Fprint(w, string(jsonString[:]))
+}
+
+// enableCors Permite que se pueda llamar la api desde cualquier servidor
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
