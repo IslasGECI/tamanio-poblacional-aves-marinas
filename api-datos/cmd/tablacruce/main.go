@@ -14,6 +14,19 @@ type App struct {
 	*mux.Router
 }
 
+func RequestLogger(targetMux http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		targetMux.ServeHTTP(w, r)
+		requesterIP := r.RemoteAddr
+		log.Printf(
+			"%s - - \"%s %s\"",
+			requesterIP,
+			r.Method,
+			r.RequestURI,
+		)
+	})
+}
+
 func main() {
 	db, err := InitSQLiteDataBaseConnection()
 	if err != nil {
@@ -28,5 +41,5 @@ func main() {
 	app.HandleFunc("/api-datos/{ave}/{isla}/{temporada}", app.CountPerSpeciesPerIslandHandler)
 	app.HandleFunc("/api-datos/tamanio", app.CountTableHandler)
 	log.Println("Escuchando en el puerto 4000")
-	http.ListenAndServe(":4000", app)
+	http.ListenAndServe(":4000", RequestLogger(app))
 }
