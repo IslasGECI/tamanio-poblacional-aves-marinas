@@ -23,6 +23,7 @@ func main() {
 	app := App{db, mux.NewRouter()}
 	app.HandleFunc("/api-datos/aves", app.SpeciesListHandler)
 	app.HandleFunc("/api-datos/islas", app.IslandListHandler)
+	app.HandleFunc("/api-datos/historicos/{ave}/{isla}", app.HistoricHandler)
 	app.HandleFunc("/api-datos/temporadas", app.SeasonListHandler)
 	app.HandleFunc("/api-datos/{ave}/{isla}/{temporada}", app.CountPerSpeciesPerIslandHandler)
 	app.HandleFunc("/api-datos/tamanio", app.CountTableHandler)

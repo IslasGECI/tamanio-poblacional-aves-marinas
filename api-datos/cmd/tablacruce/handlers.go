@@ -47,6 +47,16 @@ func (app *App) CountTableHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(jsonString[:]))
 }
 
+// HistoricHandler Función encargada de responder las peticiones a /islas
+func (app *App) HistoricHandler(w http.ResponseWriter, r *http.Request) {
+	variables := mux.Vars(r)
+	aveId, islaId := variables["ave"], variables["isla"]
+	historicos := app.GetHistoricTable(aveId, islaId)
+	jsonString, _ := json.Marshal(historicos)
+	enableCors(&w)
+	fmt.Fprint(w, string(jsonString[:]))
+}
+
 // enableCors Permite que se pueda llamar la api desde cualquier servidor
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
