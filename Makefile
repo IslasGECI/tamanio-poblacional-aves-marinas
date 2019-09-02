@@ -4,7 +4,7 @@ versionDatos = 1b981ee4293a
 archivoDatos = \
 	api-datos/data/base_datos_parejas_aves_marinas_islas.xlsx
 
-build:
+build: $(archivoDatos)
 	docker-compose build
 
 run: $(archivoDatos)
