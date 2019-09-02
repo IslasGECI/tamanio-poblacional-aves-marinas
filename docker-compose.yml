@@ -4,6 +4,10 @@ services:
     build: api-datos/
     ports:      
       - "851:4000"
+  api-lambdas:
+    build: api-lambdas
+    ports:
+      - "852:5000"
   front:
     build: front/
     ports: 
