@@ -35,3 +35,22 @@ function getBirds() {
         });
     });
 }
+
+/**
+ * Obtiene una lista con las aves de las que se tienen datos
+ */
+function getHistoric(idAve, idIsla) {
+    return new Promise((resolve, reject) => {
+        $.getJSON(`http://localhost:851/api-datos/historicos/${idAve}/${idIsla}`, islas => {
+            resolve(islas);
+        });
+    });
+}
+
+function getLambda(temporadas, maximoNidos) {
+    return new Promise((resolve, reject) => {
+        $.getJSON(`http://localhost:852/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, lambda => {
+            resolve(lambda);
+        });
+    });
+}
