@@ -9,8 +9,7 @@
 function addDrawFunction(mapLayer) {
     d3.json("http://localhost:851/api-datos/tamanio", function (islas) {
         if (capa == null) {
-            capa = d3
-                .select(mapLayer.getPanes().overlayLayer)
+            capa = d3.select(mapLayer.getPanes().overlayLayer)
                 .append("div")
                 .attr("id", "capa-circulos");
         } else {
@@ -37,10 +36,33 @@ function addDrawFunction(mapLayer) {
                 });
                 circulo.setMap(mapaGoogle);
                 circulos.push(circulo);
-                $(`#maximo-nidos-especie-${isla.Codigo}-${isla.NombreIsla.replace(" ", "")}`).text(isla.MaximoNidos);
+                $(`#maximo-nidos-especie-${isla.Codigo}-${isla.NombreIsla.replace(" ", "")}`).text(isla.MaximoNidos.toLocaleString());
+                attachPolygonInfoWindow(circulo, `
+                <div>
+                    <p>Especie: ${isla.NombreEspecie}</p>
+                    <p>Isla: ${isla.NombreIsla}</p>
+                    <p>Cantidad de nidos en el ${temporadaActual}: ${isla.MaximoNidos.toLocaleString()}</p>
+                </div>`);
             }
         };
     });
+}
+
+function attachPolygonInfoWindow(polygon, html)
+{
+	polygon.infoWindow = new google.maps.InfoWindow({
+		content: html,
+	});
+	google.maps.event.addListener(polygon, 'mouseover', function(e) {
+		var latLng = e.latLng;
+		this.setOptions({fillOpacity:0.1});
+		polygon.infoWindow.setPosition(latLng);
+		polygon.infoWindow.open(mapaGoogle);
+	});
+	google.maps.event.addListener(polygon, 'mouseout', function() {
+		this.setOptions({fillOpacity:0.35});
+		polygon.infoWindow.close();
+	});
 }
 
 /**
