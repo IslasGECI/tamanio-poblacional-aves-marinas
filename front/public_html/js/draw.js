@@ -48,21 +48,18 @@ function addDrawFunction(mapLayer) {
     });
 }
 
-function attachPolygonInfoWindow(polygon, html)
-{
-	polygon.infoWindow = new google.maps.InfoWindow({
-		content: html,
-	});
-	google.maps.event.addListener(polygon, 'mouseover', function(e) {
-		var latLng = e.latLng;
-		this.setOptions({fillOpacity:0.1});
-		polygon.infoWindow.setPosition(latLng);
-		polygon.infoWindow.open(mapaGoogle);
-	});
-	google.maps.event.addListener(polygon, 'mouseout', function() {
-		this.setOptions({fillOpacity:0.35});
-		polygon.infoWindow.close();
-	});
+function attachPolygonInfoWindow(polygon, html) {
+    polygon.infoWindow = new google.maps.InfoWindow({
+        content: html,
+    });
+    google.maps.event.addListener(polygon, 'mouseover', function (e) {
+        var latLng = e.latLng;
+        polygon.infoWindow.setPosition(latLng);
+        polygon.infoWindow.open(mapaGoogle);
+    });
+    google.maps.event.addListener(polygon, 'mouseout', function () {
+        polygon.infoWindow.close();
+    });
 }
 
 /**
