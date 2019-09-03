@@ -50,7 +50,7 @@ function getHistoric(idAve, idIsla) {
 function getLambda(temporadas, maximoNidos) {
     return new Promise((resolve, reject) => {
         $.getJSON(`http://localhost:852/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, lambda => {
-            resolve(lambda);
+            resolve(lambda.lambda);
         });
     });
 }
