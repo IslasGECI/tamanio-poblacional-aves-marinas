@@ -8,7 +8,7 @@ html, body, #map {
 #temporada-label {
     position: absolute;
     top: 5px;
-    right: 5px;
+    left: 5px;
     color: white;
 }
 
@@ -21,10 +21,16 @@ html, body, #map {
 #left-bar {
     position: absolute;
     top: 0%;
-    bottom: 100px;
+    right: 0%;
+    bottom: 14px;
     padding: 50px;
     background-color: #FFFFFFdd;
+    
+}
+
+#contenedor-tabla {
     overflow: auto;
+    height: 50%;
 }
 
 #bird-list th {
