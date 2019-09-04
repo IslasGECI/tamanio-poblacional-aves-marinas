@@ -73,7 +73,7 @@ function sortByNestCount(element1, element2) {
 }
 
 function drawTimeSerie(tablaHistorica) {
-    var margin = { top: 10, right: 30, bottom: 30, left: 60 },
+    var margin = { top: 10, right: 30, bottom: 30, left: 70 },
         width = 460 - margin.left - margin.right,
         height = 350 - margin.top - margin.bottom;
 
@@ -91,7 +91,7 @@ function drawTimeSerie(tablaHistorica) {
         .range([0, width]);
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(temporadas));
+        .call(d3.axisBottom(temporadas).ticks(5).tickFormat(d3.format(".0f")));
     svg.append("text")
         .attr("transform",
             "translate(" + (width / 2) + " ," +
@@ -106,7 +106,7 @@ function drawTimeSerie(tablaHistorica) {
         .call(d3.axisLeft(y));
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left)
+        .attr("y", 0 - margin.left-5)
         .attr("x",0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
