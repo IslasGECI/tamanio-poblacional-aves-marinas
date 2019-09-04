@@ -1,7 +1,4 @@
-
-*go.sum
-
-.vscode
 .devcontainer.json
-
+.vscode
+*go.sum
 data
