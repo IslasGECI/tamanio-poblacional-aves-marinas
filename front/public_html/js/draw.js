@@ -41,31 +41,19 @@ function addDrawFunction(mapLayer) {
 
                 let tablaHistorica = await getHistoric(isla.Codigo, isla.NombreIsla);
 
-                attachPolygonInfoWindow(circulo, `
-                <div>
-                    <p>Especie: ${isla.NombreEspecie}</p>
-                    <p>Isla: ${isla.NombreIsla}</p>
-                    <p>Cantidad de nidos en el ${temporadaActual}: ${isla.MaximoNidos.toLocaleString()}</p>
-                </div>`, tablaHistorica);
+                addHoverListener(circulo, isla.NombreEspecie, isla.NombreIsla, temporadaActual, isla.MaximoNidos.toLocaleString(), tablaHistorica);
             }
         };
     });
 }
 
-function attachPolygonInfoWindow(polygon, html, tablaHistorica) {
-    polygon.infoWindow = new google.maps.InfoWindow({
-        content: html,
-    });
+function addHoverListener(polygon, nombreEspecie, nombreIsla, temporada, maximoNidos, tablaHistorica) {
     google.maps.event.addListener(polygon, 'mouseover', function (e) {
-        var latLng = e.latLng;
-        polygon.infoWindow.setPosition(latLng);
-        polygon.infoWindow.open(mapaGoogle);
-    });
-    google.maps.event.addListener(polygon, 'mouseout', function () {
-        polygon.infoWindow.close();
-    });
-    google.maps.event.addListener(polygon, 'click', function () {
-        timeSerie(tablaHistorica)
+        $("#nombre-especie").text(nombreEspecie);
+        $("#nombre-isla").text(nombreIsla);
+        $("#etiqueta-temporada").text(temporada);
+        $("#cantidad-temporada").text(maximoNidos);
+        drawTimeSerie(tablaHistorica)
     });
 }
 
@@ -84,45 +72,53 @@ function sortByNestCount(element1, element2) {
     return 0;
 }
 
-function timeSerie(tablaHistorica) {
+function drawTimeSerie(tablaHistorica) {
     var margin = { top: 10, right: 30, bottom: 30, left: 60 },
         width = 460 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+        height = 350 - margin.top - margin.bottom;
 
-    // append the svg object to the body of the page
-    var svg = d3.select("body")
-        .append("svg")
+    d3.select("#serie-tiempo").selectAll("*").remove();
+
+    var svg = d3.select("#serie-tiempo")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
 
-    
-
-    // Add X axis --> it is a date format
-    var x = d3.scaleTime()
-        .domain(d3.extent(tablaHistorica, function(d) { return d.Temporada; }))
-        .range([ 0, width ]);
+    var temporadas = d3.scaleLinear()
+        .domain([d3.min(tablaHistorica, function (d) { return d.Temporada; }), d3.max(tablaHistorica, function (d) { return d.Temporada; })])
+        .range([0, width]);
     svg.append("g")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(x));
+        .call(d3.axisBottom(temporadas));
+    svg.append("text")
+        .attr("transform",
+            "translate(" + (width / 2) + " ," +
+            (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Temporada");
 
-    // Add Y axis
     var y = d3.scaleLinear()
-        .domain([0, d3.max(tablaHistorica, function(d) { return d.MaximoNidos; })])
-        .range([ height, 0 ]);
+        .domain([d3.min(tablaHistorica, function (d) { return d.MaximoNidos; }), d3.max(tablaHistorica, function (d) { return d.MaximoNidos; })])
+        .range([height, 0]);
     svg.append("g")
         .call(d3.axisLeft(y));
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Cantidad de parejas reproductoras");  
 
-    // Add the line
     svg.append("path")
         .datum(tablaHistorica)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
-        .x(function(d) { return x(d.Temporada) })
-        .y(function(d) { return y(d.MaximoNidos) })
+            .x(function (d) { return temporadas(d.Temporada) })
+            .y(function (d) { return y(d.MaximoNidos) })
         )
 }
