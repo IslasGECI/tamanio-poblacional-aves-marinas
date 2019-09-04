@@ -5,10 +5,10 @@ archivoDatos = \
 	data/base_datos_parejas_aves_marinas_islas.xlsx
 
 build: $(archivoDatos)
-	docker build -t tamanio-poblacional-aves-marinas .
+	docker build --tag tamanio-poblacional-aves-marinas .
 
 run:
-	docker run -p 850:4000 tamanio-poblacional-aves-marinas:latest
+	docker run --publish 850:4000 tamanio-poblacional-aves-marinas:latest
 
 $(archivoDatos):
 	if [ ! -d $(@D) ]; then mkdir -p $(@D); fi		
