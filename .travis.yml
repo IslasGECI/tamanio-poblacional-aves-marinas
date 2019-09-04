@@ -1,12 +1,12 @@
 dist: bionic
 
 services:
-- docker
+  - docker
 
 addons:
-    apt:
-        packages:
-            - sshpass
+  apt:
+    packages:
+      - sshpass
 
 stages:
   - build
@@ -17,11 +17,11 @@ jobs:
   include:
     - stage: build
       script:
-      - make build
+        - make build
     - stage: deploy
       script:
-      - make build
-      - docker save tamanio-poblacional-aves-marinas:latest | sshpass -p ${PASSWORD_SERVIDOR} ssh -oStrictHostKeyChecking=no -C ${USUARIO_VPS}@${SERVIDOR_VPS} docker load
-      # Se asegura que no truene aunque la aplicación no esté corriendo
-      - sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker rm -f ${NOMBRE_APLICACION} || true"
-      - sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker run -d -p ${PUERTO}:4000 --name ${NOMBRE_APLICACION} tamanio-poblacional-aves-marinas:latest"
+        - make build
+        - docker save tamanio-poblacional-aves-marinas:latest | sshpass -p ${PASSWORD_SERVIDOR} ssh -oStrictHostKeyChecking=no -C ${USUARIO_VPS}@${SERVIDOR_VPS} docker load
+        # Se asegura que no truene aunque la aplicación no esté corriendo
+        - sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker rm -f ${NOMBRE_APLICACION} || true"
+        - sshpass -p ${PASSWORD_SERVIDOR} ssh -C ${USUARIO_VPS}@${SERVIDOR_VPS} "docker run -d -p ${PUERTO}:4000 --name ${NOMBRE_APLICACION} tamanio-poblacional-aves-marinas:latest"
