@@ -30,7 +30,10 @@ d3.select(window).on("load", async () => {
         streetViewControl: false,
         scaleControl: true,
         fullscreenControl: false,
-        styles: estiloMapa
+        styles: estiloMapa,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP
+        },
     });
 
     let overlay = new google.maps.OverlayView();
