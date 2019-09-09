@@ -7,7 +7,7 @@
  * @param {*} mapLayer Capa donde se dibujarán los círculos.
  */
 function addDrawFunction(mapLayer) {
-    d3.json("/tamanio", function (islas) {
+    d3.json("/tamanio", function (censos) {
         if (capa == null) {
             capa = d3
                 .select(mapLayer.getPanes().overlayLayer)
@@ -23,20 +23,20 @@ function addDrawFunction(mapLayer) {
             circulos = new Array();
             $("#bird-list").empty();
 
-            islasFiltradas = islas.filter(elemento => {
+            let censosFiltrados = censos.filter(elemento => {
                 return elemento.Temporada == temporadaActual;
             });
 
-            islasFiltradas = islasFiltradas.sort(compareNestCount);
+            censosFiltrados = censosFiltrados.sort(compareNestCount);
 
-            for (let isla of islasFiltradas) {
+            for (let censo of censosFiltrados) {
                 let circulo = new google.maps.Polygon({
-                    paths: createCircleForGoogleMaps(Math.log(isla.MaximoNidos) * 10000, [
-                        isla.Longitud,
-                        isla.Latitud
+                    paths: createCircleForGoogleMaps(Math.log(censo.MaximoNidos) * 10000, [
+                        censo.Longitud,
+                        censo.Latitud
                     ]),
                     strokeWeight: 0,
-                    fillColor: getRGBStringFromCode(isla.Codigo),
+                    fillColor: getRGBStringFromCode(censo.Codigo),
                     fillOpacity: 0.35
                 });
                 circulo.setMap(mapaGoogle);
@@ -44,11 +44,11 @@ function addDrawFunction(mapLayer) {
 
                 $("#bird-list").append(`
                 <tr style="background-color: ${getRGBStringFromCode(
-                    isla.Codigo
+                    censo.Codigo
                 )}">
-                    <th>${isla.NombreIsla}</th>
-                    <th>${isla.NombreEspecie}</th>
-                    <th>${isla.MaximoNidos}</th>
+                    <th>${censo.NombreIsla}</th>
+                    <th>${censo.NombreEspecie}</th>
+                    <th>${censo.MaximoNidos}</th>
                 </tr>
               `);
             }
