@@ -20,9 +20,7 @@ function addDrawFunction(mapLayer) {
                 circulo.setMap(null);
             }
             circulos = new Array();
-            islasFiltradas = islas.filter(elemento => {
-                return elemento.Temporada == temporadaActual;
-            });
+            islasFiltradas = islas.filter(elemento => elemento.Temporada == temporadaActual);
             islasFiltradas = islasFiltradas.sort(sortByNestCount);
 
             for (let isla of islasFiltradas) {
@@ -37,23 +35,42 @@ function addDrawFunction(mapLayer) {
                 });
                 circulo.setMap(mapaGoogle);
                 circulos.push(circulo);
-                $(`#maximo-nidos-especie-${isla.Codigo}-${isla.NombreIsla.replace(" ", "")}`).text(isla.MaximoNidos.toLocaleString());
+                $(
+                    `#maximo-nidos-especie-${isla.Codigo}-${isla.NombreIsla.replace(
+                        " ",
+                        ""
+                    )}`
+                ).text(isla.MaximoNidos.toLocaleString());
 
                 let tablaHistorica = await getHistoric(isla.Codigo, isla.NombreIsla);
 
-                addHoverListener(circulo, isla.NombreEspecie, isla.NombreIsla, temporadaActual, isla.MaximoNidos.toLocaleString(), tablaHistorica);
+                addHoverListener(
+                    circulo,
+                    isla.NombreEspecie,
+                    isla.NombreIsla,
+                    temporadaActual,
+                    isla.MaximoNidos.toLocaleString(),
+                    tablaHistorica
+                );
             }
         };
     });
 }
 
-function addHoverListener(polygon, nombreEspecie, nombreIsla, temporada, maximoNidos, tablaHistorica) {
-    google.maps.event.addListener(polygon, 'mouseover', function (e) {
+function addHoverListener(
+    polygon,
+    nombreEspecie,
+    nombreIsla,
+    temporada,
+    maximoNidos,
+    tablaHistorica
+) {
+    google.maps.event.addListener(polygon, "mouseover", function (e) {
         $("#nombre-especie").text(nombreEspecie);
         $("#nombre-isla").text(nombreIsla);
         $("#etiqueta-temporada").text(temporada);
         $("#cantidad-temporada").text(maximoNidos);
-        drawTimeSerie(tablaHistorica)
+        drawTimeSerie(tablaHistorica);
     });
 }
 
@@ -73,44 +90,60 @@ function sortByNestCount(element1, element2) {
 }
 
 function drawTimeSerie(tablaHistorica) {
-    var margin = { top: 10, right: 30, bottom: 30, left: 70 },
-        width = 460 - margin.left - margin.right,
-        height = 350 - margin.top - margin.bottom;
+    let margenes = { superior: 10, derecha: 30, inferior: 30, izquierda: 70 };
+    let ancho_grafica = 460 - margenes.izquierda - margenes.derecha;
+    let alto_grafica = 350 - margenes.superior - margenes.inferior;
 
     d3.select("#serie-tiempo").selectAll("*").remove();
 
     var svg = d3.select("#serie-tiempo")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+        .attr("width", ancho_grafica + margenes.izquierda + margenes.derecha)
+        .attr("height", alto_grafica + margenes.superior + margenes.inferior)
         .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
+        .attr(
+            "transform",
+            "translate(" + margenes.izquierda + "," + margenes.superior + ")"
+        );
 
-    var temporadas = d3.scaleLinear()
-        .domain([d3.min(tablaHistorica, function (d) { return d.Temporada; }), d3.max(tablaHistorica, function (d) { return d.Temporada; })])
-        .range([0, width]);
-    svg.append("g")
-        .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(temporadas).ticks(5).tickFormat(d3.format(".0f")));
-    svg.append("text")
-        .attr("transform",
-            "translate(" + (width / 2) + " ," +
-            (height + margin.top + 20) + ")")
+    var eje_temporadas = d3.scaleLinear()
+        .domain([
+            d3.min(tablaHistorica, d => d.Temporada),
+            d3.max(tablaHistorica, d => d.Temporada)
+        ])
+        .range([0, ancho_grafica]);
+    svg
+        .append("g")
+        .attr("transform", "translate(0," + alto_grafica + ")")
+        .call(
+            d3
+                .axisBottom(eje_temporadas)
+                .ticks(5)
+                .tickFormat(d3.format(".0f"))
+        );
+    svg
+        .append("text")
+        .attr(
+            "transform",
+            `translate(${ancho_grafica / 2},${alto_grafica + margenes.superior + 20})`
+        )
         .style("text-anchor", "middle")
         .text("Temporada");
 
-    var y = d3.scaleLinear()
-        .domain([d3.min(tablaHistorica, function (d) { return d.MaximoNidos; }), d3.max(tablaHistorica, function (d) { return d.MaximoNidos; })])
-        .range([height, 0]);
-    svg.append("g")
-        .call(d3.axisLeft(y));
+    var eje_cantidad_parejas = d3
+        .scaleLinear()
+        .domain([
+            d3.min(tablaHistorica, d => d.MaximoNidos),
+            d3.max(tablaHistorica, d => d.MaximoNidos)
+        ])
+        .range([alto_grafica, 0]);
+    svg.append("g").call(d3.axisLeft(eje_cantidad_parejas));
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left-5)
-        .attr("x",0 - (height / 2))
+        .attr("y", 0 - margenes.izquierda - 5)
+        .attr("x", 0 - alto_grafica / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
-        .text("Cantidad de parejas reproductoras");  
+        .text("Cantidad de parejas reproductoras");
 
     svg.append("path")
         .datum(tablaHistorica)
@@ -118,7 +151,7 @@ function drawTimeSerie(tablaHistorica) {
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
-            .x(function (d) { return temporadas(d.Temporada) })
-            .y(function (d) { return y(d.MaximoNidos) })
-        )
+            .x(d => eje_temporadas(d.Temporada))
+            .y(d => eje_cantidad_parejas(d.MaximoNidos))
+        );
 }
