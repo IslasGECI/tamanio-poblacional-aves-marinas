@@ -27,7 +27,7 @@ function addDrawFunction(mapLayer) {
                 return elemento.Temporada == temporadaActual;
             });
 
-            islasFiltradas = islasFiltradas.sort(sortByNestCount);
+            islasFiltradas = islasFiltradas.sort(compareNestCount);
 
             for (let isla of islasFiltradas) {
                 let circulo = new google.maps.Polygon({
@@ -61,7 +61,7 @@ function addDrawFunction(mapLayer) {
  * @param {*} element1 primer elemento a comparar
  * @param {*} element2 segundo elemento a comparar
  */
-function sortByNestCount(element1, element2) {
+function compareNestCount(element1, element2) {
     if (element1.MaximoNidos < element2.MaximoNidos) {
         return 1;
     }
