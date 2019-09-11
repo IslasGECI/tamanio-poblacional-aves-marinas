@@ -1,0 +1,32 @@
+html, body, #map {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#temporada-label {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: white;
+}
+
+#scroll-temporada {
+    position: absolute;
+    bottom: 50px;
+    left: 5px;
+}
+
+#left-bar {
+    position: absolute;
+    top: 80px;
+    bottom: 100px;
+    padding: 50px;
+    background-color: #FFFFFFdd;
+    overflow: auto;
+}
+
+#bird-list th {
+    color: white;
+}
