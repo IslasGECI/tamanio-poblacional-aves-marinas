@@ -8,9 +8,7 @@
  */
 function getIslands() {
     return new Promise(function (resolve, reject) {
-        $.getJSON(`/islas`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/islas", resolve);
     });
 }
 
@@ -19,9 +17,7 @@ function getIslands() {
  */
 function getSeasons() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`/temporadas`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/temporadas", resolve);
     });
 }
 
@@ -30,8 +26,17 @@ function getSeasons() {
  */
 function getBirds() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`/aves`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/aves", resolve);
+    });
+}
+
+/**
+ * Obtiene datos desde una api, esta pensada para usarse dentro de una Promise
+ * @param {*} url dirección de donde se van a jalar los datos
+ * @param {*} resolve función encargada de regresar un valor de la tarea asíncrona
+ */
+function getDataFromEntryPoint(url, resolve) {
+    $.getJSON(url, datos => {
+        resolve(datos);
     });
 }

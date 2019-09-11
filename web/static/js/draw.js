@@ -50,7 +50,7 @@ function addDrawFunction(mapLayer) {
                     <th>${censo.NombreEspecie}</th>
                     <th>${censo.MaximoNidos}</th>
                 </tr>
-              `);
+            `);
             }
         };
     });
