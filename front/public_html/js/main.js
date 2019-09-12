@@ -71,6 +71,7 @@ async function drawTable(especies, islas, overlay) {
                 let arregloTemporada = tablaHistorica.map(function (value, index) { return value.Temporada; });
                 let arregloMaximoNidos = tablaHistorica.map(function (value, index) { return value.MaximoNidos; });
                 let lambda = await getLambda(arregloTemporada, arregloMaximoNidos);
+                lambda = lambda["lambda"];
                 $("#bird-list").append(`
                     <tr style="background-color: ${getRGBStringFromCode(
                         especie.Codigo

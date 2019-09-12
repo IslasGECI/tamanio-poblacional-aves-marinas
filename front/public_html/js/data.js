@@ -8,7 +8,7 @@
  */
 function getIslands() {
     return new Promise(function (resolve, reject) {
-        getDataFromEntryPoint("/islas", resolve);
+        getDataFromEntryPoint("http://localhost:851/api-datos/islas", resolve);
     });
 }
 
@@ -17,7 +17,7 @@ function getIslands() {
  */
 function getSeasons() {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint("/temporadas", resolve);
+        getDataFromEntryPoint("http://localhost:851/api-datos/temporadas", resolve);
     });
 }
 
@@ -26,7 +26,7 @@ function getSeasons() {
  */
 function getBirds() {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint("/aves", resolve);
+        getDataFromEntryPoint("http://localhost:851/api-datos/aves", resolve);
     });
 }
 
