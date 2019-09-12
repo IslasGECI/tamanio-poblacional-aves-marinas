@@ -7,7 +7,7 @@
  * @param {*} mapLayer Capa donde se dibujarán los círculos.
  */
 function addDrawFunction(mapLayer) {
-    d3.json("http://localhost:851/api-datos/tamanio", function (islas) {
+    d3.json("http://localhost:851/api-datos/tamanio", function (censos) {
         if (capa == null) {
             capa = d3.select(mapLayer.getPanes().overlayLayer)
                 .append("div")
@@ -20,36 +20,36 @@ function addDrawFunction(mapLayer) {
                 circulo.setMap(null);
             }
             circulos = new Array();
-            islasFiltradas = islas.filter(elemento => elemento.Temporada == temporadaActual);
-            islasFiltradas = islasFiltradas.sort(sortByNestCount);
+            let censosFiltradas = censos.filter(elemento => elemento.Temporada == temporadaActual);
+            censosFiltradas = censosFiltradas.sort(sortByNestCount);
 
-            for (let isla of islasFiltradas) {
+            for (let censo of censosFiltradas) {
                 let circulo = new google.maps.Polygon({
-                    paths: createCircleForGoogleMaps(Math.log(isla.MaximoNidos) * 10000, [
-                        isla.Longitud,
-                        isla.Latitud
+                    paths: createCircleForGoogleMaps(Math.log(censo.MaximoNidos) * 10000, [
+                        censo.Longitud,
+                        censo.Latitud
                     ]),
                     strokeWeight: 0,
-                    fillColor: getRGBStringFromCode(isla.Codigo),
+                    fillColor: getRGBStringFromCode(censo.Codigo),
                     fillOpacity: 0.35
                 });
                 circulo.setMap(mapaGoogle);
                 circulos.push(circulo);
                 $(
-                    `#maximo-nidos-especie-${isla.Codigo}-${isla.NombreIsla.replace(
+                    `#maximo-nidos-especie-${censo.Codigo}-${censo.NombreIsla.replace(
                         " ",
                         ""
                     )}`
-                ).text(isla.MaximoNidos.toLocaleString());
+                ).text(censo.MaximoNidos.toLocaleString());
 
-                let tablaHistorica = await getHistoric(isla.Codigo, isla.NombreIsla);
+                let tablaHistorica = await getHistoric(censo.Codigo, censo.NombreIsla);
 
                 addHoverListener(
                     circulo,
-                    isla.NombreEspecie,
-                    isla.NombreIsla,
+                    censo.NombreEspecie,
+                    censo.NombreIsla,
                     temporadaActual,
-                    isla.MaximoNidos.toLocaleString(),
+                    censo.MaximoNidos.toLocaleString(),
                     tablaHistorica
                 );
             }

@@ -8,9 +8,7 @@
  */
 function getIslands() {
     return new Promise(function (resolve, reject) {
-        $.getJSON(`http://localhost:851/api-datos/islas`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/islas", resolve);
     });
 }
 
@@ -19,9 +17,7 @@ function getIslands() {
  */
 function getSeasons() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`http://localhost:851/api-datos/temporadas`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/temporadas", resolve);
     });
 }
 
@@ -30,9 +26,7 @@ function getSeasons() {
  */
 function getBirds() {
     return new Promise((resolve, reject) => {
-        $.getJSON(`http://localhost:851/api-datos/aves`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint("/aves", resolve);
     });
 }
 
@@ -41,16 +35,23 @@ function getBirds() {
  */
 function getHistoric(idAve, idIsla) {
     return new Promise((resolve, reject) => {
-        $.getJSON(`http://localhost:851/api-datos/historicos/${idAve}/${idIsla}`, islas => {
-            resolve(islas);
-        });
+        getDataFromEntryPoint(`http://localhost:851/api-datos/historicos/${idAve}/${idIsla}`, resolve);
     });
 }
 
 function getLambda(temporadas, maximoNidos) {
     return new Promise((resolve, reject) => {
-        $.getJSON(`http://localhost:852/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, lambda => {
-            resolve(lambda.lambda);
-        });
+        getDataFromEntryPoint(`http://localhost:852/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, resolve);
+    });
+}
+
+/**
+ * Obtiene datos desde una api, esta pensada para usarse dentro de una Promise
+ * @param {*} url dirección de donde se van a jalar los datos
+ * @param {*} resolve función encargada de regresar un valor de la tarea asíncrona
+ */
+function getDataFromEntryPoint(url, resolve) {
+    $.getJSON(url, datos => {
+        resolve(datos);
     });
 }
