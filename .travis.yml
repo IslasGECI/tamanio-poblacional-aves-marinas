@@ -1,7 +1,7 @@
 dist: bionic
 
 services:
-- docker
+  - docker
 
 stages:
   - build
