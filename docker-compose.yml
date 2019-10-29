@@ -1,7 +1,7 @@
 version: "3"
 services:
   api-datos:
-    build: api-datos/
+    build: api-datos
     ports:      
       - "851:4000"
   api-lambdas:
@@ -9,6 +9,6 @@ services:
     ports:
       - "852:5000"
   front:
-    build: front/
+    build: front
     ports: 
       - "850:80"
