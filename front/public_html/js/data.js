@@ -8,7 +8,7 @@
  */
 function getIslands() {
     return new Promise(function (resolve, reject) {
-        getDataFromEntryPoint("http://islasgeci.org:851/api-datos/islas", resolve);
+        getDataFromEntryPoint("http://islasgeci.org:8510/api-datos/islas", resolve);
     });
 }
 
@@ -17,7 +17,7 @@ function getIslands() {
  */
 function getSeasons() {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint("http://islasgeci.org:851/api-datos/temporadas", resolve);
+        getDataFromEntryPoint("http://islasgeci.org:8510/api-datos/temporadas", resolve);
     });
 }
 
@@ -26,7 +26,7 @@ function getSeasons() {
  */
 function getBirds() {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint("http://islasgeci.org:851/api-datos/aves", resolve);
+        getDataFromEntryPoint("http://islasgeci.org:8510/api-datos/aves", resolve);
     });
 }
 
@@ -35,13 +35,13 @@ function getBirds() {
  */
 function getHistoric(idAve, idIsla) {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint(`http://islasgeci.org:851/api-datos/historicos/${idAve}/${idIsla}`, resolve);
+        getDataFromEntryPoint(`http://islasgeci.org:8510/api-datos/historicos/${idAve}/${idIsla}`, resolve);
     });
 }
 
 function getLambda(temporadas, maximoNidos) {
     return new Promise((resolve, reject) => {
-        getDataFromEntryPoint(`http://islasgeci.org:852/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, resolve);
+        getDataFromEntryPoint(`http://islasgeci.org:8520/api-lambdas/lambda?temporadas=[${temporadas}]&maximo_nidos=[${maximoNidos}]`, resolve);
     });
 }
 
