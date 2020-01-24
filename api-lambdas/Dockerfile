@@ -5,4 +5,4 @@ RUN pip install \
     flask \
     pandas \
     scipy
-CMD ["python", "app.py"]
+CMD make
