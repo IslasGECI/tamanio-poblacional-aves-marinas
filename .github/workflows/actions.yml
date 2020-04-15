@@ -1,0 +1,19 @@
+name: Conservación de Islas
+on: [push, pull_request]
+
+jobs:
+  actions:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Copia repositorio
+      uses: actions/checkout@v2
+    - name: Construye imagen api-datos
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos --file Dockerfile.jupyter api-datos
+    - name: Construye imagen api-lambdas
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-lambdas --file Dockerfile.base api-lambdas
+    - name: Construye imagen front
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_front --file Dockerfile.base front
+    - name: Construye imagen root
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas .
+    - name: Ejecuta objetivo principal del Makefile
+      run: docker run --volume ${PWD}:/workdir islasgeci/tamanio-poblacional-aves-marinas make
