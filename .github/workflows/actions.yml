@@ -13,7 +13,7 @@ jobs:
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_PASSWORD: ${{ secrets.BITBUCKET_PASSWORD }}
-      run: docker run --volume ${PWD}:/workdir islasgeci/tamanio-poblacional-aves-marinas make
+      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci/tamanio-poblacional-aves-marinas make
     - name: Construye imagen api-datos
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos --file api-datos/Dockerfile api-datos
     - name: Construye imagen api-lambdas
