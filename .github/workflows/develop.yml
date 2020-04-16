@@ -27,7 +27,7 @@ jobs:
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+      run: echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
     - name: Sube api-datos a Docker Hub
       run: docker push islasgeci/tamanio-poblacional-aves-marinas_api-datos:latest
     - name: Sube api-lambdas a Docker Hub
