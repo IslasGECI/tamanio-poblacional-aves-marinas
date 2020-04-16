@@ -22,7 +22,7 @@ func RequestLogger(targetMux http.Handler) http.Handler {
 			"%s - - \"%s %s\"",
 			requesterIP,
 			r.Method,
-			r.RequestURI,
+			r.RequestURI
 		)
 	})
 }
