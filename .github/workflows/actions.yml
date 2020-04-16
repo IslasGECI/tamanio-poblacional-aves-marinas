@@ -10,6 +10,9 @@ jobs:
     - name: Construye imagen root
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas .
     - name: Ejecuta objetivo principal del Makefile
+      env:
+        BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+        BITBUCKET_PASSWORD: ${{ secrets.BITBUCKET_PASSWORD }}
       run: docker run --volume ${PWD}:/workdir islasgeci/tamanio-poblacional-aves-marinas make
     - name: Construye imagen api-datos
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos --file api-datos/Dockerfile api-datos
