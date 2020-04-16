@@ -9,7 +9,9 @@ $(archivoDatos):
 	mkdir --parents $(@D)
 	curl --output $@ --user $${BITBUCKET_USERNAME}:$${BITBUCKET_PASSWORD} https://bitbucket.org/IslasGECI/datos-binarios/raw/$(versionDatos)/$(@F)
 
-.PHONY: build run
+.PHONY: build data run
 
 build: $(archivoDatos)
 	docker-compose build
+
+data: $(archivoDatos)

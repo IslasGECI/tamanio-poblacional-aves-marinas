@@ -7,13 +7,13 @@ jobs:
     steps:
     - name: Copia repositorio
       uses: actions/checkout@v2
-    - name: Construye imagen root
+    - name: Construye imagen
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas .
-    - name: Ejecuta objetivo principal del Makefile
+    - name: Descarga los datos
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_PASSWORD: ${{ secrets.BITBUCKET_PASSWORD }}
-      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci/tamanio-poblacional-aves-marinas make
+      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci/tamanio-poblacional-aves-marinas make data
     - name: Construye imagen api-datos
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos --file api-datos/Dockerfile api-datos
     - name: Construye imagen api-lambdas
