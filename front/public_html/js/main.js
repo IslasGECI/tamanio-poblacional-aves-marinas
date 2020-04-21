@@ -89,8 +89,9 @@ async function drawTable(especies, islas, overlay) {
 }
 
 function getLambdaColor(lambda) {
-    if (lambda === "nan")
+    if (lambda === "nan") {
         return "white";
+        }
     if (parseFloat(lambda) >= 1) {
         return "green";
     }
