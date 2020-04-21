@@ -91,32 +91,32 @@ function sortByNestCount(element1, element2) {
 
 function drawTimeSerie(tablaHistorica) {
     let margenes = { superior: 10, derecha: 30, inferior: 30, izquierda: 70 };
-    let ancho_grafica = 460 - margenes.izquierda - margenes.derecha;
-    let alto_grafica = 350 - margenes.superior - margenes.inferior;
+    let anchoGrafica = 460 - margenes.izquierda - margenes.derecha;
+    let altoGrafica = 350 - margenes.superior - margenes.inferior;
 
     d3.select("#serie-tiempo").selectAll("*").remove();
 
     var svg = d3.select("#serie-tiempo")
-        .attr("width", ancho_grafica + margenes.izquierda + margenes.derecha)
-        .attr("height", alto_grafica + margenes.superior + margenes.inferior)
+        .attr("width", anchoGrafica + margenes.izquierda + margenes.derecha)
+        .attr("height", altoGrafica + margenes.superior + margenes.inferior)
         .append("g")
         .attr(
             "transform",
             "translate(" + margenes.izquierda + "," + margenes.superior + ")"
         );
 
-    var eje_temporadas = d3.scaleLinear()
+    var ejeTemporadas = d3.scaleLinear()
         .domain([
             d3.min(tablaHistorica, d => d.Temporada),
             d3.max(tablaHistorica, d => d.Temporada)
         ])
-        .range([0, ancho_grafica]);
+        .range([0, anchoGrafica]);
     svg
         .append("g")
-        .attr("transform", "translate(0," + alto_grafica + ")")
+        .attr("transform", "translate(0," + altoGrafica + ")")
         .call(
             d3
-                .axisBottom(eje_temporadas)
+                .axisBottom(ejeTemporadas)
                 .ticks(5)
                 .tickFormat(d3.format(".0f"))
         );
@@ -124,23 +124,23 @@ function drawTimeSerie(tablaHistorica) {
         .append("text")
         .attr(
             "transform",
-            `translate(${ancho_grafica / 2},${alto_grafica + margenes.superior + 20})`
+            `translate(${anchoGrafica / 2},${altoGrafica + margenes.superior + 20})`
         )
         .style("text-anchor", "middle")
         .text("Temporada");
 
-    var eje_cantidad_parejas = d3
+    var ejeCantidadParejas = d3
         .scaleLinear()
         .domain([
             d3.min(tablaHistorica, d => d.MaximoNidos),
             d3.max(tablaHistorica, d => d.MaximoNidos)
         ])
-        .range([alto_grafica, 0]);
-    svg.append("g").call(d3.axisLeft(eje_cantidad_parejas));
+        .range([altoGrafica, 0]);
+    svg.append("g").call(d3.axisLeft(ejeCantidadParejas));
     svg.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margenes.izquierda - 5)
-        .attr("x", 0 - alto_grafica / 2)
+        .attr("x", 0 - altoGrafica / 2)
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("Cantidad de parejas reproductoras");
@@ -151,7 +151,7 @@ function drawTimeSerie(tablaHistorica) {
         .attr("stroke", "steelblue")
         .attr("stroke-width", 1.5)
         .attr("d", d3.line()
-            .x(d => eje_temporadas(d.Temporada))
-            .y(d => eje_cantidad_parejas(d.MaximoNidos))
+            .x(d => ejeTemporadas(d.Temporada))
+            .y(d => ejeCantidadParejas(d.MaximoNidos))
         );
 }
