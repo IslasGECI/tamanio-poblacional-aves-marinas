@@ -101,5 +101,5 @@ function getLambdaColor(lambda) {
     if (lambda < 0) {
         return "red";
     }
-    return "orange";
+    return "orange"; // Para el caso: lambda == 0
 }
