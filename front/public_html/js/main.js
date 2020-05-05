@@ -92,14 +92,13 @@ function getLambdaColor(lambda) {
     if (lambda === "nan") {
         return "white";
         }
-    if (parseFloat(lambda) >= 1) {
+    if (parseFloat(lambda) > 1.2) {
         return "green";
     }
-    if (lambda > 0 && lambda < 1) {
+    if (0.8 <= parseFloat(lambda) && parseFloat(lambda) <= 1.2) {
         return "yellow";
     }
-    if (lambda < 0) {
+    if (parseFloat(lambda) < 0.8) {
         return "red";
     }
-    return "orange"; // Para el caso: lambda == 0
 }
