@@ -24,7 +24,7 @@ type Island struct {
 }
 
 // NewIsland Crea una nueva estructura de tipo Island
-func NewIsland(id int, nombre string, longitud, latitud float64) Island {
+func NewIsland(id int, nombre string, longitud float64, latitud float64) Island {
 	return Island{id, nombre, longitud, latitud}
 }
 
@@ -38,7 +38,7 @@ type CountTableRow struct {
 	Codigo        string
 }
 
-func NewCountTableRow(nombreEspecie string, nombreIsla string, maximoNidos int, temporada int, latitud, longitud float64, codigo string) CountTableRow {
+func NewCountTableRow(nombreEspecie string, nombreIsla string, maximoNidos int, temporada int, latitud float64, longitud float64, codigo string) CountTableRow {
 	return CountTableRow{nombreEspecie, nombreIsla, maximoNidos, temporada, latitud, longitud, codigo}
 }
 
@@ -47,6 +47,6 @@ type HistoricTableRow struct {
 	MaximoNidos int
 }
 
-func NewHistoricTableRow(temporada, maximoNidos int) HistoricTableRow {
+func NewHistoricTableRow(temporada int, maximoNidos int) HistoricTableRow {
 	return HistoricTableRow{temporada, maximoNidos}
 }
