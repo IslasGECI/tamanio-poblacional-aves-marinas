@@ -128,3 +128,26 @@ func (app *App) GetCountTable() []CountTableRow {
 	}
 	return tablaCantidadParejas
 }
+
+// GetQueryList Regresa los renglones de la tabla especificada
+func (app *App) GetHistoricTable(specieId, islandId string) []HistoricTableRow {
+	var tablaCantidadParejas []HistoricTableRow
+	renglones, err := app.Query(`SELECT r.temporada, r.maximo_nidos FROM registro as r 
+								JOIN especie as sp
+								JOIN isla as i
+								ON sp.id = r.id_especie AND i.id = r.id_isla
+								WHERE sp.codigo=$1 AND i.nombre=$2`, specieId, islandId)
+	if err != nil {
+		panic(err)
+	}
+	var temporada int
+	var maximoNidos int
+	for renglones.Next() {
+		err = renglones.Scan(&temporada, &maximoNidos)
+		if err != nil {
+			panic(err)
+		}
+		tablaCantidadParejas = append(tablaCantidadParejas, NewHistoricTableRow(temporada, maximoNidos))
+	}
+	return tablaCantidadParejas
+}

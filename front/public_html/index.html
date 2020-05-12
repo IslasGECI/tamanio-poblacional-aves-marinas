@@ -21,18 +21,25 @@
     <script src="js/main.js"></script>
 </head>
 
-<body>   
+<body>
     <div id="map"></div>
     <input type="range" value="0" class="slider" id="scroll-temporada" autofocus>
-    <h1 id="temporada-label">Temproada: <span id="temporada"></span></h1>
     <div id="left-bar">
-        <table class="table table-condensed" id="bird-list">
-            <tr>
-                <th>Isla</th>
-                <th>Ave</th>
-                <th>Parejas</th>
-            </tr>
-        </table>
+        <div id="contenedor-tabla">
+            <table class="table table-condensed" id="bird-list">
+                <tr style="background-color: black; color: white; font-weight: bold">
+                    <th>Isla</th>
+                    <th>Ave</th>
+                    <th>Cantidad de Parejas</th>
+                    <th title="Tasa de crecimiento fundamental">λ</th>
+                </tr>
+            </table>
+        </div>
+        <div id="contenedor-serie-tiempo">
+            <h2 ><span id="nombre-especie"></span> <small id="nombre-isla"></small></h2>
+            <h3>Cantidad de parejas reproductoras en <span id="etiqueta-temporada"></span>: <span id="cantidad-temporada"></span></h3>
+            <svg id="serie-tiempo"></svg>
+        </div>
     </div>
 </body>
 

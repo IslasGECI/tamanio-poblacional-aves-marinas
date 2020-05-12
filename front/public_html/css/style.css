@@ -20,11 +20,17 @@ html, body, #map {
 
 #left-bar {
     position: absolute;
-    top: 80px;
-    bottom: 100px;
+    top: 0%;
+    right: 0%;
+    bottom: 14px;
     padding: 50px;
     background-color: #FFFFFFdd;
+    
+}
+
+#contenedor-tabla {
     overflow: auto;
+    height: 50%;
 }
 
 #bird-list th {

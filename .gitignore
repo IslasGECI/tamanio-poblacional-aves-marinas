@@ -1,4 +1,2 @@
-.devcontainer.json
-.vscode
-*go.sum
-data
+.*
+*.xlsx

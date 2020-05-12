@@ -1,0 +1,36 @@
+name: Conservación de Islas
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  actions:
+    runs-on: ubuntu-18.04
+    steps:
+    - name: Copia repositorio
+      uses: actions/checkout@v2
+    - name: Construye imagen
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas .
+    - name: Descarga los datos
+      env:
+        BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
+        BITBUCKET_PASSWORD: ${{ secrets.BITBUCKET_PASSWORD }}
+      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci/tamanio-poblacional-aves-marinas make data
+    - name: Construye imagen api-datos
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos:latest --file api-datos/Dockerfile api-datos
+    - name: Construye imagen api-lambdas
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-lambdas:latest --file api-lambdas/Dockerfile api-lambdas
+    - name: Construye imagen front
+      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_front:latest --file front/Dockerfile front
+    - name: Docker log-in
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      run: echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USERNAME}" --password-stdin
+    - name: Sube api-datos a Docker Hub
+      run: docker push islasgeci/tamanio-poblacional-aves-marinas_api-datos:latest
+    - name: Sube api-lambdas a Docker Hub
+      run: docker push islasgeci/tamanio-poblacional-aves-marinas_api-lambdas:latest
+    - name: Sube front a Docker Hub
+      run: docker push islasgeci/tamanio-poblacional-aves-marinas_front:latest

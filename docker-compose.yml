@@ -1,0 +1,14 @@
+version: "3"
+services:
+  api-datos:
+    build: api-datos
+    ports:      
+      - "8510:4000"
+  api-lambdas:
+    build: api-lambdas
+    ports:
+      - "8520:5000"
+  front:
+    build: front
+    ports: 
+      - "8500:80"
