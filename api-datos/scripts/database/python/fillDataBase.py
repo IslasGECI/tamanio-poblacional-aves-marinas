@@ -32,11 +32,11 @@ def select_species_by_name(conexion, nombre):
 
 
 def create_registry(conexion, renglon):
-    nombre_isla = renglon['Isla/Grupo islas']
-    nombre_especie = renglon['Especie en inglés']
+    nombre_isla = renglon['Isla']
+    nombre_especie = renglon['Nombre_en_ingles']
     maximo_numero_individuos = renglon[
-        'Máxima cantidad o cantidad total de nidos (parejas)']
-    temporada = renglon['Año']
+        'Maxima_cantidad_nidos']
+    temporada = renglon['Temporada']
     notas = renglon['Notas']
     id_isla = select_island_by_name(conexion, nombre_isla)[0]
     id_especie = select_species_by_name(conexion, nombre_especie)[0]
@@ -51,7 +51,7 @@ def create_registry(conexion, renglon):
 if __name__ == '__main__':
     conexion = create_connection('./aves_marinas.db')
     tabla_datos = pd.read_excel(
-        './base_datos_parejas_aves_marinas_islas.xlsx').dropna(subset=['Isla/Grupo islas'])
+        './parejas_aves_marinas_islas_del_pacifico.xlsx').dropna(subset=['Isla'])
     with conexion:
         for indice, renglon in tabla_datos.iterrows():
             project_id = create_registry(conexion, renglon)
