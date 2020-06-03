@@ -16,7 +16,7 @@ FROM python:3 AS llena_bd
 RUN pip install numpy pandas xlrd
 WORKDIR /workdir/data
 COPY --from=crea_bd /workdir/data .
-COPY ./data/base_datos_parejas_aves_marinas_islas.xlsx /workdir/data
+COPY ./data/parejas_aves_marinas_islas_del_pacifico.xlsx /workdir/data
 COPY ./scripts /workdir/scripts
 RUN python /workdir/scripts/database/python/fillDataBase.py
 
