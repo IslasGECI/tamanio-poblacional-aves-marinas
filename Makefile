@@ -3,7 +3,7 @@ run: build
 
 # Archivo con los datos de la cantidad de nidos en las islas del Pacífico
 archivoDatos = api-datos/data/parejas_aves_marinas_islas_del_pacifico.xlsx
-versionDatos = c4903d6cce4da1d946cd65ece0feda86d4707661
+versionDatos = 6832498d46f49d6aae6469b41d34ccf63fda1e3b
 
 ${archivoDatos}:
 	mkdir --parents ${@D}
