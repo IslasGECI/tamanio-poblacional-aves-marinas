@@ -13,7 +13,8 @@ INSERT INTO isla (nombre, longitud, latitud)
         ("San Roque", -114.3751549, 27.1431125),
         ("Asunción", -114.2966509, 27.1045667),
         ("San Benito", -115.6012184, 28.3049262),
-        ("Guadalupe", -118.4330882, 29.0185055);
+        ("Guadalupe", -118.4330882, 29.0185055),
+        ("Morro Prieto and Zapato", -118.27, 29.04);
 
 -- Agrega algunas especies de aves marinas que se encuentran en las islas del pacífico norte
 INSERT INTO especie (nombre, codigo, es_madriguera)
