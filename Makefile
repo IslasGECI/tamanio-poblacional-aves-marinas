@@ -9,9 +9,12 @@ ${archivoDatos}:
 	mkdir --parents ${@D}
 	curl --output ${@} --user $${BITBUCKET_USERNAME}:$${BITBUCKET_PASSWORD} https://bitbucket.org/IslasGECI/archivos_binarios/raw/${versionDatos}/excel/mapa_web/${@F}
 
-.PHONY: build data run
+.PHONY: build clean data run
 
 build: ${archivoDatos}
 	docker-compose build
 
 data: ${archivoDatos}
+
+clean:
+	rm --force --recursive api-datos/data
