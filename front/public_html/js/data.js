@@ -2,8 +2,8 @@
  * Funciones que obtienen los datos desde el servidor
  */
 
-var apiDatosUrl = "http://localhost:8510/api-datos/";
-var apiLambdasUrl = "http://localhost:8520/api-lambdas/";
+var apiDatosUrl = "http://islasgeci.org:8510/api-datos/";
+var apiLambdasUrl = "http://islasgeci.org:8520/api-lambdas/";
 
 
 /**
