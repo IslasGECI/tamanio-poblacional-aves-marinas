@@ -1,5 +1,6 @@
 FROM python:3
 WORKDIR /workdir
+COPY . .
 RUN apt-get update && apt-get install --yes \
     curl \
     docker.io \
