@@ -28,7 +28,7 @@ data: ${archivoDatos}
 
 format:
 	black --check --line-length 100 ${repo}
-	black --check --line-length 100 tests
+	black --check --line-length 100 api-lambdas/tests
 
 mutants:
 	mutmut run --paths-to-mutate ${repo}
