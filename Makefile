@@ -5,6 +5,7 @@ archivoDatos = api-datos/data/parejas_aves_marinas_islas_del_pacifico.xlsx
 versionDatos = 6832498d46f49d6aae6469b41d34ccf63fda1e3b
 
 repo = api-lambdas/lambdas
+codecov_token = dc2e7174-d74c-4e54-8ba2-8f817c4ee446
 
 ${archivoDatos}:
 	mkdir --parents ${@D}
@@ -35,3 +36,7 @@ mutants:
 
 run: build
 	docker-compose up
+
+tests:
+	pytest --cov=${repo} --cov-report=xml --verbose && \
+	codecov --token=${codecov_token}
