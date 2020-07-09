@@ -16,8 +16,10 @@ ${archivoDatos}:
 		clean \
 		data \
 		format \
+		lint \
 		mutants \
 		run
+		tests \
 
 build: ${archivoDatos}
 	docker-compose build
@@ -30,6 +32,12 @@ data: ${archivoDatos}
 format:
 	black --check --line-length 100 ${module}
 	black --check --line-length 100 api-lambdas/tests
+
+lint:
+	flake8 --max-line-length 100 ${module}
+	flake8 --max-line-length 100 api-lambdas/tests
+	pylint ${module}
+	pylint api-lambdas/tests
 
 mutants:
 	mutmut run --paths-to-mutate ${module}
