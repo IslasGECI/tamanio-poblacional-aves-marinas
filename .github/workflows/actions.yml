@@ -8,12 +8,18 @@ jobs:
     - name: Copia repositorio
       uses: actions/checkout@v2
     - name: Construye imagen
-      run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas .
+      run: docker build --tag islasgeci .
+    - name: Verifica el formato
+      run: docker run islasgeci make format
+    - name: Corre pruebas
+      run: docker run islasgeci make tests
+    - name: Evalua resistencia a mutaciones
+      run: docker run islasgeci make mutants
     - name: Descarga los datos
       env:
         BITBUCKET_USERNAME: ${{ secrets.BITBUCKET_USERNAME }}
         BITBUCKET_PASSWORD: ${{ secrets.BITBUCKET_PASSWORD }}
-      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci/tamanio-poblacional-aves-marinas make data
+      run: docker run --volume ${PWD}:/workdir --env BITBUCKET_USERNAME=$BITBUCKET_USERNAME --env BITBUCKET_PASSWORD=$BITBUCKET_PASSWORD islasgeci make data
     - name: Construye imagen api-datos
       run: docker build --tag islasgeci/tamanio-poblacional-aves-marinas_api-datos --file api-datos/Dockerfile api-datos
     - name: Construye imagen api-lambdas
