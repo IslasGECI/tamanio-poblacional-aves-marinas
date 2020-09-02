@@ -18,8 +18,8 @@ ${archivoDatos}:
 		format \
 		lint \
 		mutants \
-		run
-		tests \
+		run \
+		tests
 
 build: ${archivoDatos}
 	docker-compose build
