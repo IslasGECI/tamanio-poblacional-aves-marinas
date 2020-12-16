@@ -23,7 +23,11 @@
 
 <body>
     <div id="map"></div>
-    <input type="range" value="0" class="slider" id="scroll-temporada" autofocus>
+    <div class="range-wrap">
+        <p class="title-range">Temporada</p>
+        <input value="0" step="1" type="range" class="range" id="scroll-temporada">
+        <output class="bubble"></output>
+    </div>
     <div id="left-bar">
         <div id="contenedor-tabla">
             <table class="table table-condensed" id="bird-list">

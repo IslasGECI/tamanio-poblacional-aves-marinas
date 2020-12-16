@@ -23,6 +23,10 @@ d3.select(window).on("load", async () => {
     $("#scroll-temporada").attr("min", 1);
     $("#scroll-temporada").attr("max", temporadas.length);
 
+    const rangerWrap = document.querySelector(".range-wrap");
+    const bubble = rangerWrap.querySelector(".bubble");
+    bubble.innerHTML = "<p id='temporada'>"+temporadaActual+"</p>";
+
     mapaGoogle = new google.maps.Map($("#map")[0], {
         zoom: 6,
         center: new google.maps.LatLng(centroMapa),
@@ -51,6 +55,7 @@ d3.select(window).on("load", async () => {
         cleanTable(especies, islas);
         overlay.draw();
         $("#temporada").text(temporadaActual);
+        bubble.innerHTML = "<p id='temporada'>"+temporadaActual+"</p>";
     });
 });
 
