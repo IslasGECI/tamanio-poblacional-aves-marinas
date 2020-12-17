@@ -48,3 +48,7 @@ run: build
 tests:
 	pytest --rootdir=${module}/.. --cov=${module} --cov-report=xml --verbose && \
 	codecov --token=${codecov_token}
+
+frontend:
+	docker build --tag frontend_mapa_burbuja ./front && \
+	docker run -d -p 8500:8080 -it frontend_mapa_burbuja 
