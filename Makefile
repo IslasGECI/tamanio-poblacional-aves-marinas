@@ -51,4 +51,4 @@ tests:
 
 frontend:
 	docker build --tag frontend_mapa_burbuja ./front && \
-	docker run -d -p 8500:8080 -it frontend_mapa_burbuja 
+	docker run -d -p 8500:80 -it frontend_mapa_burbuja 
