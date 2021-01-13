@@ -25,7 +25,8 @@ d3.select(window).on("load", async () => {
 
     const rangerWrap = document.querySelector(".range-wrap");
     const bubble = rangerWrap.querySelector(".bubble");
-    bubble.innerHTML = "<p id='temporada'>"+temporadaActual+"</p>";
+
+    setSeason(bubble, temporadaActual)
 
     mapaGoogle = new google.maps.Map($("#map")[0], {
         zoom: 6,
@@ -55,9 +56,13 @@ d3.select(window).on("load", async () => {
         cleanTable(especies, islas);
         overlay.draw();
         $("#temporada").text(temporadaActual);
-        bubble.innerHTML = "<p id='temporada'>"+temporadaActual+"</p>";
+        setSeason(bubble, temporadaActual)
     });
 });
+
+function setSeason(bubble, selectedSeason) {
+    bubble.innerHTML = "<p id='temporada'>"+selectedSeason+"</p>";
+}
 
 function cleanTable(especies, islas) {
     for (let especie of especies) {
