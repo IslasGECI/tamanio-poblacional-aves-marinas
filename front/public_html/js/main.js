@@ -13,9 +13,9 @@ var circulos = new Array();
  * Agrega handlers y obtiene valores iniciales de la aplicación
  */
 d3.select(window).on("load", async () => {
-    let temporadas = await getSeasons();
-    let especies = await getBirds();
-    let islas = await getIslands();
+    const temporadas = await getSeasons();
+    const especies = await getBirds();
+    const islas = await getIslands();
     temporadaActual = temporadas[indiceTemporada];
     const centroMapa = { "lat": 27.577622, "lng": -111.454526 };
 
@@ -41,7 +41,7 @@ d3.select(window).on("load", async () => {
         },
     });
 
-    let overlay = new google.maps.OverlayView();
+    const overlay = new google.maps.OverlayView();
     overlay.onAdd = () => {
         addDrawFunction(overlay);
     };
