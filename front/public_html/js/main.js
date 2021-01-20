@@ -17,7 +17,7 @@ d3.select(window).on("load", async () => {
     let especies = await getBirds();
     let islas = await getIslands();
     temporadaActual = temporadas[indiceTemporada];
-    let centroMapa = { "lat": 27.577622, "lng": -111.454526 };
+    const centroMapa = { "lat": 27.577622, "lng": -111.454526 };
 
     $("#temporada").text(temporadaActual);
     $("#scroll-temporada").attr("min", 1);
@@ -61,7 +61,7 @@ d3.select(window).on("load", async () => {
 });
 
 function setSeason(bubble, selectedSeason) {
-    bubble.innerHTML = "<p id='temporada'>"+selectedSeason+"</p>";
+    bubble.innerHTML = `<p id='temporada'>${selectedSeason}</p>`;
 }
 
 function cleanTable(especies, islas) {
