@@ -78,8 +78,8 @@ async function drawTable(especies, islas, overlay) {
             let tablaHistorica = await getHistoric(especie.Codigo, isla.Nombre);
             let existeAveEnIsla = tablaHistorica !== null;
             if (existeAveEnIsla) {
-                let arregloTemporada = tablaHistorica.map(function (value, index) { return value.Temporada; });
-                let arregloMaximoNidos = tablaHistorica.map(function (value, index) { return value.MaximoNidos; });
+                let arregloTemporada = tablaHistorica.map((value) => value.Temporada);
+                let arregloMaximoNidos = tablaHistorica.map((value) => value.MaximoNidos);
                 let lambda = await getLambda(arregloTemporada, arregloMaximoNidos);
                 lambda = lambda["lambda"];
                 $("#bird-list").append(`
