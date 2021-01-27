@@ -1,0 +1,17 @@
+{
+    "name": "no_oddities_here",
+    "version": "0.0.0-development",
+    "description": "Ejerciocio visto en code wars",
+    "main": "index.js",
+    "scripts": {
+      "test": "jest"
+    },
+    "dependencies": {
+      "jest": "^24.8.0"
+    },
+    "devDependencies": {
+      "@stryker-mutator/core": "^3.1.0",
+      "@stryker-mutator/jest-runner": "^3.1.0",
+      "@stryker-mutator/javascript-mutator": "^3.1.0"
+    }
+  }
