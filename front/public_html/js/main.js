@@ -1,3 +1,6 @@
+// const answer = require("functions");
+// import setSeason from "./functions";
+
 /**
  * TODO: Refactorizar para quitar variables globales
  * 
@@ -59,10 +62,6 @@ d3.select(window).on("load", async () => {
         setSeason(bubble, temporadaActual)
     });
 });
-
-function setSeason(bubble, selectedSeason) {
-    bubble.innerHTML = `<p id='temporada'>${selectedSeason}</p>`;
-}
 
 function cleanTable(especies, islas) {
     for (let especie of especies) {
